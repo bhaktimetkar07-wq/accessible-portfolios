@@ -1,437 +1,428 @@
-:root {
-    --bg-color: #f5f7fa;
-    --text-color: #222;
-    --card-color: #ffffff;
-    --header-color: #1f2937;
-    --link-color: #ffffff;
-    --accent-color: #2563eb;
-    --accent-hover: #1d4ed8;
-    --border-color: #d1d5db;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-
-/* =========================
-   DARK THEME
-   ========================= */
-
-body.dark-theme {
-    --bg-color: #111827;
-    --text-color: #f3f4f6;
-    --card-color: #1f2937;
-    --header-color: #030712;
-    --link-color: #ffffff;
-    --accent-color: #60a5fa;
-    --accent-hover: #93c5fd;
-    --border-color: #374151;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-
-/* =========================
-   BASIC RESET
-   ========================= */
+```css
+/* ================================
+   GENERAL RESET
+================================ */
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-
-/* =========================
-   BODY
-   ========================= */
 
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+    min-height: 100vh;
     line-height: 1.6;
-
-    background-color: var(--bg-color);
-    color: var(--text-color);
-
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
 }
 
 
-/* =========================
-   SKIP LINK
-   ========================= */
-
-.skip-link {
-    display: inline-block;
-    padding: 5px;
-}
-
-
-/* =========================
+/* ================================
    HEADER
-   ========================= */
+================================ */
 
 header {
-    position: relative;
-
-    background-color: var(--header-color);
+    background: #222;
     color: white;
-
-    padding: 30px 20px;
-
-    text-align: center;
+    padding: 15px 30px;
 }
 
-
-.header-content {
-    position: relative;
-}
-
-
-header h1 {
-    margin: 0;
-
-    font-size: 2rem;
-}
-
-
-/* =========================
-   THEME BUTTON
-   ========================= */
-
-#theme-toggle {
-    position: absolute;
-
-    top: 0;
-    right: 0;
-
-    padding: 10px 14px;
-
-    border: 1px solid white;
-    border-radius: 8px;
-
-    background-color: transparent;
-    color: white;
-
-    font-size: 20px;
-
-    cursor: pointer;
-}
-
-
-#theme-toggle:hover,
-#theme-toggle:focus {
-    background-color: var(--accent-color);
-}
-
-
-/* =========================
-   NAVIGATION
-   ========================= */
 
 nav {
+    max-width: 1100px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+nav h2 {
+    font-size: 22px;
+}
+
+
+nav ul {
+    list-style: none;
+
+    display: flex;
+    gap: 25px;
+}
+
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+main {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+
+/* ================================
+   HERO
+================================ */
+
+.hero {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+
+.hero p {
+    color: #555;
+}
+
+
+/* ================================
+   TASK SECTION
+================================ */
+
+.task-section {
+    max-width: 650px;
+    margin: auto;
+
+    background: white;
+    padding: 30px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.task-section h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+/* ================================
+   TASK FORM
+================================ */
+
+#taskForm {
+    margin-bottom: 25px;
+}
+
+
+#taskForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+
+.task-input-container {
+    display: flex;
+    gap: 10px;
+}
+
+
+#taskInput {
+    flex: 1;
+
+    padding: 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    font-size: 16px;
+}
+
+
+button {
+    border: none;
+
+    padding: 10px 15px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+
+#taskForm button {
+    background: #333;
+    color: white;
+}
+
+
+#taskForm button:hover {
+    background: #555;
+}
+
+
+/* ================================
+   FILTERS
+================================ */
+
+.filters {
     display: flex;
 
-    flex-direction: column;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+
+.filter {
+    background: #e5e5e5;
+}
+
+
+.filter.active {
+    background: #333;
+    color: white;
+}
+
+
+/* ================================
+   TASK
+================================ */
+
+.task {
+    display: flex;
 
     align-items: center;
 
     gap: 10px;
 
+    padding: 12px;
+
+    margin-bottom: 10px;
+
+    background: #f7f7f7;
+
+    border-radius: 5px;
+}
+
+
+.task-text {
+    flex: 1;
+
+    font-size: 16px;
+}
+
+
+.task.completed .task-text {
+    text-decoration: line-through;
+
+    color: #888;
+}
+
+
+.edit-btn {
+    background: #ddd;
+}
+
+
+.delete-btn {
+    background: #ddd;
+}
+
+
+.edit-btn:hover,
+.delete-btn:hover {
+    background: #bbb;
+}
+
+
+/* ================================
+   TASK COUNT
+================================ */
+
+#taskCount {
+    text-align: center;
+
     margin-top: 20px;
+
+    color: #666;
 }
 
 
-nav a {
-    color: var(--link-color);
+/* ================================
+   PROJECTS
+================================ */
 
-    text-decoration: none;
-
-    padding: 8px 14px;
-
-    border-radius: 6px;
-}
-
-
-nav a:hover,
-nav a:focus {
-    background-color: var(--accent-color);
-}
-
-
-/* =========================
-   MAIN CONTENT
-   ========================= */
-
-main {
-    width: min(100% - 30px, 1100px);
-
+.page-section {
+    max-width: 800px;
     margin: auto;
-
-    padding: 30px 0;
 }
 
 
-section {
+.page-section > h1 {
+    text-align: center;
+
     margin-bottom: 30px;
 }
 
 
-h2 {
-    font-size: 1.8rem;
-}
+.project-card {
+    background: white;
 
-
-h3 {
-    margin-top: 0;
-}
-
-
-/* =========================
-   ARTICLES / CARDS
-   ========================= */
-
-article {
-    background-color: var(--card-color);
-
-    border: 1px solid var(--border-color);
-
-    border-radius: 10px;
-
-    padding: 20px;
+    padding: 25px;
 
     margin-bottom: 20px;
 
-    box-shadow: var(--shadow);
+    border-radius: 10px;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 
-article a {
-    display: inline-block;
-
-    margin-top: 10px;
-
-    padding: 8px 14px;
-
-    background-color: var(--accent-color);
-
-    color: white;
-
-    text-decoration: none;
-
-    border-radius: 6px;
+.project-card h2 {
+    margin-bottom: 10px;
 }
 
 
-article a:hover,
-article a:focus {
-    background-color: var(--accent-hover);
+.project-card ul {
+    margin-top: 15px;
+
+    padding-left: 25px;
 }
 
 
-/* =========================
-   LIST
-   ========================= */
+/* ================================
+   CONTACT FORM
+================================ */
 
-ul {
-    padding-left: 20px;
-}
-
-
-/* =========================
-   FORM
-   ========================= */
-
-form {
+.contact-form {
     max-width: 600px;
 
     margin: auto;
 
-    background-color: var(--card-color);
+    background: white;
 
-    padding: 25px;
+    padding: 30px;
 
     border-radius: 10px;
 
-    box-shadow: var(--shadow);
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
 }
 
 
-form label {
-    display: block;
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
 
-    margin-bottom: 5px;
+    border: 1px solid #ccc;
 
-    font-weight: bold;
-}
-
-
-form input,
-form textarea {
-    width: 100%;
-
-    padding: 10px;
-
-    margin-bottom: 15px;
-
-    border: 1px solid var(--border-color);
-
-    border-radius: 6px;
+    border-radius: 5px;
 
     font-size: 16px;
 
-    background-color: var(--bg-color);
-
-    color: var(--text-color);
+    margin-bottom: 10px;
 }
 
 
-form textarea {
-    resize: vertical;
-}
-
-
-form button {
-    padding: 10px 20px;
-
-    border: none;
-
-    border-radius: 6px;
-
-    background-color: var(--accent-color);
+.contact-form button {
+    background: #333;
 
     color: white;
 
-    font-size: 16px;
-
-    cursor: pointer;
+    margin-top: 10px;
 }
 
 
-form button:hover,
-form button:focus {
-    background-color: var(--accent-hover);
+.contact-form button:hover {
+    background: #555;
 }
 
 
-form input:focus,
-form textarea:focus {
-    outline: 2px solid var(--accent-color);
-
-    outline-offset: 2px;
-}
-
-
-/* =========================
+/* ================================
    FOOTER
-   ========================= */
+================================ */
 
 footer {
+    background: #222;
+
+    color: white;
+
     text-align: center;
 
     padding: 20px;
 
-    background-color: var(--header-color);
-
-    color: white;
+    margin-top: 40px;
 }
 
 
-/* =========================
-   TABLET / DESKTOP
-   ========================= */
+/* ================================
+   RESPONSIVE DESIGN
+================================ */
 
-@media (min-width: 600px) {
+@media (max-width: 600px) {
 
     nav {
-        flex-direction: row;
+        flex-direction: column;
 
-        justify-content: center;
+        gap: 10px;
     }
 
-    main {
-        padding: 40px 0;
+
+    nav ul {
+        gap: 15px;
     }
 
-    article {
-        margin-bottom: 0;
+
+    .task-input-container {
+        flex-direction: column;
     }
 
-}
 
-
-/* =========================
-   LARGE SCREEN
-   ========================= */
-
-@media (min-width: 900px) {
-
-    #main-content > section {
-        margin-bottom: 50px;
+    .filters {
+        flex-wrap: wrap;
     }
 
-    section:has(article) {
-        display: grid;
 
-        grid-template-columns: repeat(3, 1fr);
-
-        gap: 25px;
+    .task {
+        flex-wrap: wrap;
     }
 
-    section:has(article) h2 {
-        grid-column: 1 / -1;
+
+    .hero h1 {
+        font-size: 28px;
     }
 
-    section:has(article) article {
-        margin-bottom: 0;
+
+    .task-section {
+        padding: 20px;
     }
 
 }
 
-
-/* =========================
-   MOBILE 375px
-   ========================= */
-
-@media (max-width: 599px) {
-
-    header {
-        padding: 25px 15px;
-    }
-
-    header h1 {
-        font-size: 1.8rem;
-
-        padding-right: 50px;
-    }
-
-    #theme-toggle {
-        top: 0;
-        right: 0;
-
-        padding: 8px 10px;
-
-        font-size: 18px;
-    }
-
-    nav {
-        margin-top: 20px;
-    }
-
-    nav a {
-        padding: 8px 12px;
-    }
-
-    main {
-        width: min(100% - 30px, 1100px);
-
-        padding: 30px 0;
-    }
-
-    h2 {
-        font-size: 1.7rem;
-    }
-
-    p {
-        font-size: 1rem;
-    }
-
-}
