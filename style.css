@@ -1,428 +1,186 @@
-```css
-/* ================================
-   GENERAL RESET
-================================ */
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    color: #222;
     min-height: 100vh;
-    line-height: 1.6;
+
+    background: linear-gradient(
+        135deg,
+        #dbeafe,
+        #eff6ff
+    );
+
+    color: #172033;
 }
 
-
-/* ================================
-   HEADER
-================================ */
-
-header {
-    background: #222;
-    color: white;
-    padding: 15px 30px;
-}
-
-
-nav {
-    max-width: 1100px;
-    margin: auto;
+.container {
+    min-height: 100vh;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+
+    padding: 24px;
 }
 
-
-nav h2 {
-    font-size: 22px;
-}
-
-
-nav ul {
-    list-style: none;
-
-    display: flex;
-    gap: 25px;
-}
-
-
-nav a {
-    color: white;
-    text-decoration: none;
-}
-
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-
-/* ================================
-   MAIN
-================================ */
-
-main {
-    max-width: 1000px;
-    margin: auto;
-    padding: 40px 20px;
-}
-
-
-/* ================================
-   HERO
-================================ */
-
-.hero {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-
-.hero h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-
-.hero p {
-    color: #555;
-}
-
-
-/* ================================
-   TASK SECTION
-================================ */
-
-.task-section {
-    max-width: 650px;
-    margin: auto;
+.dashboard {
+    width: 100%;
+    max-width: 700px;
 
     background: white;
-    padding: 30px;
 
-    border-radius: 10px;
+    padding: 35px;
+
+    border-radius: 20px;
 
     box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.1);
+        0 12px 35px rgba(0, 0, 0, 0.12);
 }
 
-
-.task-section h2 {
+h1 {
     text-align: center;
-    margin-bottom: 25px;
-}
-
-
-/* ================================
-   TASK FORM
-================================ */
-
-#taskForm {
-    margin-bottom: 25px;
-}
-
-
-#taskForm label {
-    display: block;
     margin-bottom: 8px;
-    font-weight: bold;
 }
 
+.subtitle {
+    text-align: center;
 
-.task-input-container {
+    color: #667085;
+
+    margin-bottom: 25px;
+}
+
+.search-box {
     display: flex;
     gap: 10px;
 }
 
-
-#taskInput {
+.search-box input {
     flex: 1;
 
-    padding: 12px;
+    padding: 13px 15px;
 
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #cbd5e1;
+
+    border-radius: 10px;
 
     font-size: 16px;
 }
 
-
-button {
+.search-box button {
     border: none;
 
-    padding: 10px 15px;
+    padding: 13px 22px;
 
-    border-radius: 5px;
+    border-radius: 10px;
 
     cursor: pointer;
 
-    font-size: 14px;
-}
+    background: #2563eb;
 
-
-#taskForm button {
-    background: #333;
     color: white;
-}
-
-
-#taskForm button:hover {
-    background: #555;
-}
-
-
-/* ================================
-   FILTERS
-================================ */
-
-.filters {
-    display: flex;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    margin-bottom: 20px;
-}
-
-
-.filter {
-    background: #e5e5e5;
-}
-
-
-.filter.active {
-    background: #333;
-    color: white;
-}
-
-
-/* ================================
-   TASK
-================================ */
-
-.task {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 12px;
-
-    margin-bottom: 10px;
-
-    background: #f7f7f7;
-
-    border-radius: 5px;
-}
-
-
-.task-text {
-    flex: 1;
 
     font-size: 16px;
 }
 
-
-.task.completed .task-text {
-    text-decoration: line-through;
-
-    color: #888;
+.search-box button:hover {
+    opacity: 0.9;
 }
 
+.status {
+    min-height: 25px;
 
-.edit-btn {
-    background: #ddd;
-}
+    margin: 18px 0;
 
-
-.delete-btn {
-    background: #ddd;
-}
-
-
-.edit-btn:hover,
-.delete-btn:hover {
-    background: #bbb;
-}
-
-
-/* ================================
-   TASK COUNT
-================================ */
-
-#taskCount {
     text-align: center;
 
-    margin-top: 20px;
-
-    color: #666;
+    color: #475467;
 }
 
-
-/* ================================
-   PROJECTS
-================================ */
-
-.page-section {
-    max-width: 800px;
-    margin: auto;
-}
-
-
-.page-section > h1 {
-    text-align: center;
-
-    margin-bottom: 30px;
-}
-
-
-.project-card {
-    background: white;
+.weather-card {
+    margin-top: 15px;
 
     padding: 25px;
 
-    margin-bottom: 20px;
+    border-radius: 16px;
 
-    border-radius: 10px;
+    background: #f8fafc;
 
-    box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-
-.project-card h2 {
-    margin-bottom: 10px;
+.hidden {
+    display: none;
 }
 
-
-.project-card ul {
-    margin-top: 15px;
-
-    padding-left: 25px;
+.location h2 {
+    font-size: 28px;
 }
 
+.location p {
+    color: #667085;
 
-/* ================================
-   CONTACT FORM
-================================ */
+    margin-top: 5px;
+}
 
-.contact-form {
-    max-width: 600px;
+.temperature {
+    font-size: 56px;
 
-    margin: auto;
+    font-weight: bold;
+
+    margin: 25px 0;
+}
+
+.metrics {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.metric {
+    padding: 18px 10px;
 
     background: white;
 
-    padding: 30px;
-
-    border-radius: 10px;
-
-    box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 10px;
+    gap: 7px;
 }
 
-
-.contact-form input,
-.contact-form textarea {
-    padding: 12px;
-
-    border: 1px solid #ccc;
-
-    border-radius: 5px;
-
-    font-size: 16px;
-
-    margin-bottom: 10px;
+.metric span {
+    font-size: 25px;
 }
 
-
-.contact-form button {
-    background: #333;
-
-    color: white;
-
-    margin-top: 10px;
+.metric strong {
+    font-size: 20px;
 }
 
-
-.contact-form button:hover {
-    background: #555;
+.metric small {
+    color: #667085;
 }
-
-
-/* ================================
-   FOOTER
-================================ */
-
-footer {
-    background: #222;
-
-    color: white;
-
-    text-align: center;
-
-    padding: 20px;
-
-    margin-top: 40px;
-}
-
-
-/* ================================
-   RESPONSIVE DESIGN
-================================ */
 
 @media (max-width: 600px) {
 
-    nav {
-        flex-direction: column;
-
-        gap: 10px;
+    .dashboard {
+        padding: 25px 18px;
     }
 
-
-    nav ul {
-        gap: 15px;
-    }
-
-
-    .task-input-container {
+    .search-box {
         flex-direction: column;
     }
 
-
-    .filters {
-        flex-wrap: wrap;
+    .metrics {
+        grid-template-columns: 1fr;
     }
-
-
-    .task {
-        flex-wrap: wrap;
-    }
-
-
-    .hero h1 {
-        font-size: 28px;
-    }
-
-
-    .task-section {
-        padding: 20px;
-    }
-
 }
-

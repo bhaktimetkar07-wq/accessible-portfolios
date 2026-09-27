@@ -1,198 +1,167 @@
-const taskForm = document.getElementById("taskForm");
-const taskInput = document.getElementById("taskInput");
-const taskList = document.getElementById("taskList");
-const taskCount = document.getElementById("taskCount");
-const filterButtons = document.querySelector(".filters");
+const weatherForm = document.getElementById("weatherForm");
+const cityInput = document.getElementById("cityInput");
+const statusText = document.getElementById("status");
+const weatherCard = document.getElementById("weatherCard");
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let currentFilter = "all";
+const cityName = document.getElementById("cityName");
+const countryName = document.getElementById("countryName");
+const temperature = document.getElementById("temperature");
+const humidity = document.getElementById("humidity");
+const windSpeed = document.getElementById("windSpeed");
+const weatherCode = document.getElementById("weatherCode");
 
 
-// ADD TASK
-taskForm.addEventListener("submit", function(event) {
+weatherForm.addEventListener("submit", async (event) => {
 
     event.preventDefault();
 
-    const text = taskInput.value.trim();
+    const city = cityInput.value.trim();
 
-    if (text === "") {
+    if (!city) {
+        showError("Please enter a city name.");
         return;
     }
 
-    const newTask = {
-        id: Date.now(),
-        text: text,
-        completed: false
-    };
-
-    tasks.push(newTask);
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-    taskInput.value = "";
-
-    renderTasks();
+    await getWeather(city);
 });
 
 
-// DISPLAY TASKS
-function renderTasks() {
+async function getWeather(city) {
 
-    taskList.innerHTML = "";
+    try {
 
-    let displayedTasks = tasks;
+        showStatus("Loading weather...");
 
-    if (currentFilter === "active") {
-        displayedTasks = tasks.filter(function(task) {
-            return task.completed === false;
-        });
-    }
+        weatherCard.classList.add("hidden");
 
-    if (currentFilter === "completed") {
-        displayedTasks = tasks.filter(function(task) {
-            return task.completed === true;
-        });
-    }
 
-    displayedTasks.forEach(function(task) {
+        // Step 1: Find the city
 
-        const div = document.createElement("div");
+        const locationResponse = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`
+        );
 
-        div.className = "task";
 
-        if (task.completed) {
-            div.classList.add("completed");
+        if (!locationResponse.ok) {
+            throw new Error("Unable to search for the city.");
         }
 
-        div.dataset.id = task.id;
 
-        div.innerHTML = `
-            <input
-                type="checkbox"
-                class="complete-checkbox"
-                ${task.completed ? "checked" : ""}
-            >
-
-            <span class="task-text">${task.text}</span>
-
-            <button class="edit-btn">Edit</button>
-
-            <button class="delete-btn">Delete</button>
-        `;
-
-        taskList.appendChild(div);
-    });
-
-    updateCount();
-}
+        const locationData = await locationResponse.json();
 
 
-// EDIT AND DELETE
-taskList.addEventListener("click", function(event) {
-
-    const taskElement = event.target.closest(".task");
-
-    if (!taskElement) {
-        return;
-    }
-
-    const id = Number(taskElement.dataset.id);
-
-    // DELETE
-    if (event.target.classList.contains("delete-btn")) {
-
-        tasks = tasks.filter(function(task) {
-            return task.id !== id;
-        });
-
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-
-        renderTasks();
-    }
-
-
-    // EDIT
-    if (event.target.classList.contains("edit-btn")) {
-
-        const task = tasks.find(function(task) {
-            return task.id === id;
-        });
-
-        const newText = prompt("Edit task:", task.text);
-
-        if (newText !== null && newText.trim() !== "") {
-
-            task.text = newText.trim();
-
-            localStorage.setItem(
-                "tasks",
-                JSON.stringify(tasks)
+        if (
+            !locationData.results ||
+            locationData.results.length === 0
+        ) {
+            throw new Error(
+                "City not found. Please try another city."
             );
-
-            renderTasks();
         }
+
+
+        const location = locationData.results[0];
+
+
+        // Step 2: Get weather data
+
+        const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=auto`
+        );
+
+
+        if (!weatherResponse.ok) {
+            throw new Error(
+                "Unable to fetch weather data."
+            );
+        }
+
+
+        const weatherData = await weatherResponse.json();
+
+
+        // Access current weather data
+
+        const current = weatherData.current;
+
+
+        // Display data
+
+        cityName.textContent = location.name;
+
+        countryName.textContent =
+            `${location.admin1 ? location.admin1 + ", " : ""}${location.country}`;
+
+        temperature.textContent =
+            current.temperature_2m;
+
+        humidity.textContent =
+            `${current.relative_humidity_2m}%`;
+
+        windSpeed.textContent =
+            `${current.wind_speed_10m} km/h`;
+
+        weatherCode.textContent =
+            getWeatherCondition(current.weather_code);
+
+
+        weatherCard.classList.remove("hidden");
+
+        showStatus("");
+
     }
-});
 
+    catch (error) {
 
-// COMPLETE TASK
-taskList.addEventListener("change", function(event) {
+        showError(error.message);
 
-    if (!event.target.classList.contains("complete-checkbox")) {
-        return;
     }
-
-    const taskElement = event.target.closest(".task");
-
-    const id = Number(taskElement.dataset.id);
-
-    const task = tasks.find(function(task) {
-        return task.id === id;
-    });
-
-    task.completed = event.target.checked;
-
-    localStorage.setItem(
-        "tasks",
-        JSON.stringify(tasks)
-    );
-
-    renderTasks();
-});
-
-
-// FILTERS
-filterButtons.addEventListener("click", function(event) {
-
-    if (!event.target.classList.contains("filter")) {
-        return;
-    }
-
-    document.querySelectorAll(".filter").forEach(function(button) {
-        button.classList.remove("active");
-    });
-
-    event.target.classList.add("active");
-
-    currentFilter = event.target.dataset.filter;
-
-    renderTasks();
-});
-
-
-// TASK COUNT
-function updateCount() {
-
-    const activeTasks = tasks.filter(function(task) {
-        return task.completed === false;
-    }).length;
-
-    taskCount.textContent =
-        activeTasks + " " +
-        (activeTasks === 1 ? "task" : "tasks") +
-        " remaining";
 }
 
 
-// LOAD SAVED TASKS
-renderTasks();
+function getWeatherCondition(code) {
+
+    if (code === 0)
+        return "Clear";
+
+    if ([1, 2, 3].includes(code))
+        return "Cloudy";
+
+    if ([45, 48].includes(code))
+        return "Fog";
+
+    if ([51, 53, 55, 56, 57].includes(code))
+        return "Drizzle";
+
+    if ([61, 63, 65, 66, 67].includes(code))
+        return "Rain";
+
+    if ([71, 73, 75, 77].includes(code))
+        return "Snow";
+
+    if ([80, 81, 82].includes(code))
+        return "Showers";
+
+    if ([95, 96, 99].includes(code))
+        return "Thunderstorm";
+
+    return "Unknown";
+}
+
+
+function showStatus(message) {
+
+    statusText.textContent = message;
+
+    statusText.style.color = "";
+
+}
+
+
+function showError(message) {
+
+    statusText.textContent = message;
+
+    statusText.style.color = "#dc2626";
+
+}
